@@ -1,9 +1,9 @@
 # `flexit-modbus` Python library
 
-[![CI](https://github.com/home-assistant-libs/flexit-modbus/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/home-assistant-libs/flexit-modbus/actions/workflows/ci.yml)
+[![CI](https://github.com/troelde/flexit-modbus/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/troelde/flexit-modbus/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/flexit-modbus.svg)](https://pypi.org/project/flexit-modbus/)
 [![Python](https://img.shields.io/pypi/pyversions/flexit-modbus.svg)](https://pypi.org/project/flexit-modbus/)
-[![License](https://img.shields.io/github/license/home-assistant-libs/flexit-modbus.svg)](LICENSE)
+[![License](https://img.shields.io/github/license/troelde/flexit-modbus.svg)](https://github.com/troelde/flexit-modbus/blob/main/LICENSE)
 
 `flexit-modbus` is an asynchronous Python library for reading from and
 writing to a **Flexit air handling unit fitted with a CI66 Modbus adapter**
@@ -90,5 +90,4 @@ with `modbus-connection` — no real CI66 adapter or Modbus server is needed.
 
 See `script/format.sh`, `script/libcheck.sh`, and `script/libtest.sh` for the
 local development workflow (formatting, linting, and running tests). Pull
-requests are made against the `develop` branch; `main` tracks released
-versions only.
+requests are made against the `main` branch.

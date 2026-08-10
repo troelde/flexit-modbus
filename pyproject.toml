@@ -24,7 +24,7 @@ dependencies = ["modbus-connection>=4.2"]
 cli = ["modbus-connection[pymodbus]>=4.2"]
 
 [project.urls]
-Homepage = "https://github.com/home-assistant-libs/flexit-modbus"
+Homepage = "https://github.com/troelde/flexit-modbus"
 
 [dependency-groups]
 dev = [
