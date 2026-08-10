@@ -34,7 +34,6 @@ class Flexit:
     info = info
 
     def __init__(self, unit: ModbusUnit) -> None:
-        self._unit = unit
         self.setpoints = Setpoints(unit)
         self.measurements = Measurements(unit)
         self._group = ComponentGroup(unit, [self.setpoints, self.measurements])

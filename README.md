@@ -81,6 +81,13 @@ $ pip install flexit-modbus[cli]
 $ python script/query.py tcp 192.168.1.50 --unit 1
 ```
 
+For a USB UART / RS-485 adapter (Modbus RTU), pass the serial device path and
+set serial transport explicitly:
+
+```console
+$ python script/query.py /dev/ttyUSB0 --transport serial --unit 1
+```
+
 ## Testing and validation
 
 The test suite runs entirely against the in-memory mock backend that ships
