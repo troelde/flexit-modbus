@@ -86,8 +86,53 @@ $ python script/query.py tcp 192.168.1.50 --unit 1
 The test suite runs entirely against the in-memory mock backend that ships
 with `modbus-connection` — no real CI66 adapter or Modbus server is needed.
 
+Run tests from the project root with either `pytest` directly or the helper
+script:
+
+```console
+$ pytest
+$ ./script/libtest.sh
+$ pytest tests/test_device.py
+$ ./script/libtest.sh tests/test_device.py -k temperature
+```
+
+`script/libtest.sh` is a convenience wrapper around `python -m pytest` that:
+
+- ensures `pytest` and `pytest-asyncio` are installed for the selected Python,
+- adds `src/` to `PYTHONPATH`,
+- adds a local checkout of `modbus-connection` to `PYTHONPATH`.
+
+By default it expects `modbus-connection` at
+`/config/dev/modbus-connection/src`. If your checkout is elsewhere, set
+`MODBUS_CONNECTION_SRC` before running:
+
+```console
+$ MODBUS_CONNECTION_SRC=/path/to/modbus-connection/src ./script/libtest.sh
+```
+
+Any extra arguments are passed through to `pytest`.
+
 ## Documentation, development and contribution guidelines
 
-See `script/format.sh`, `script/libcheck.sh`, and `script/libtest.sh` for the
-local development workflow (formatting, linting, and running tests). Pull
-requests are made against the `main` branch.
+Use the helper scripts in `script/` for a consistent local workflow:
+
+- `./script/format.sh`: formats the codebase.
+- `./script/libcheck.sh`: runs static checks/linting.
+- `./script/libtest.sh`: runs the library test suite (and wires the local
+  `modbus-connection` source path as described above).
+
+A typical pre-PR run from the project root is:
+
+```console
+$ ./script/format.sh
+$ ./script/libcheck.sh
+$ ./script/libtest.sh
+```
+
+You can pass additional `pytest` arguments through `libtest.sh`, for example:
+
+```console
+$ ./script/libtest.sh -k activity -x
+```
+
+Pull requests are made against the `main` branch.
