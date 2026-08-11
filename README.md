@@ -53,6 +53,8 @@ Other Flexit units using the same CI66 Modbus register map are expected to
 work, since the adapter (not the ventilation unit itself) defines the
 Modbus interface used here.
 
+Official documentation can be found [here](https://flexitwebsiteprodstorage.blob.core.windows.net/product-documents/3510?).
+
 ## Usage
 
 ```python
@@ -61,10 +63,10 @@ from modbus_connection.pymodbus import PymodbusConnection
 
 from flexit_modbus import Flexit, FanMode
 
-connection = PymodbusConnection(ModbusTcpParams(host="192.168.1.50", port=502))
+connection = PymodbusConnection(ModbusTcpParams(host="10.0.0.52", port=502))
 await connection.connect()
 
-device = Flexit(connection.for_unit(1))
+device = Flexit(connection.for_unit(21))
 await device.async_update()
 
 print(device.target_temperature, device.measurements.supply_air_temperature)
@@ -78,14 +80,14 @@ A command-line query tool is also provided; install the `cli` extra and run:
 
 ```console
 $ pip install flexit-modbus[cli]
-$ python script/query.py tcp 192.168.1.50 --unit 1
+$ python script/query.py 192.168.1.50 --unit 21
 ```
 
 For a USB UART / RS-485 adapter (Modbus RTU), pass the serial device path and
 set serial transport explicitly:
 
 ```console
-$ python script/query.py /dev/ttyUSB0 --transport serial --unit 1
+$ python script/query.py /dev/ttyUSB0 --transport serial --unit 21
 ```
 
 ## Testing and validation
