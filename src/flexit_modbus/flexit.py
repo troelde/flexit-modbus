@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from modbus_connection.model import ComponentGroup
-
 from .device_info import DeviceInformation
 from .enums import FanMode, SystemActivity
 from .subsystems import Measurements, Setpoints
@@ -36,11 +34,19 @@ class Flexit:
     def __init__(self, unit: ModbusUnit) -> None:
         self.setpoints = Setpoints(unit)
         self.measurements = Measurements(unit)
-        self._group = ComponentGroup(unit, [self.setpoints, self.measurements])
+
+    async def async_update_measurements(self) -> None:
+        """Refresh the read-only measurements."""
+        await self.measurements.async_update()
+
+    async def async_update_setpoints(self) -> None:
+        """Refresh the operator-writable setpoints."""
+        await self.setpoints.async_update()
 
     async def async_update(self) -> None:
-        """Read every sub-system in as few Modbus requests as possible."""
-        await self._group.async_update()
+        """Refresh measurements and setpoints."""
+        await self.async_update_measurements()
+        await self.async_update_setpoints()
 
     async def async_set_target_temperature(self, value: float) -> None:
         """Write a new target temperature (validated against 10-30 °C)."""

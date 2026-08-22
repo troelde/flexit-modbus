@@ -76,6 +76,9 @@ await device.async_set_target_temperature(21.5)
 await device.async_set_fan_mode(FanMode.HIGH)
 ```
 
+Consumers that poll measurements and setpoints on different schedules can use
+`async_update_measurements()` and `async_update_setpoints()` independently.
+
 A command-line query tool is also provided; install the `cli` extra and run:
 
 ```console
@@ -89,6 +92,9 @@ set serial transport explicitly:
 ```console
 $ python script/query.py /dev/ttyUSB0 --transport serial --unit 21
 ```
+
+Run `python script/query.py --help` to see all transport, framing, timeout,
+port, and serial options supplied by `modbus-connection`.
 
 ## Testing and validation
 
@@ -144,4 +150,4 @@ You can pass additional `pytest` arguments through `libtest.sh`, for example:
 $ ./script/libtest.sh -k activity -x
 ```
 
-Pull requests are made against the `main` branch.
+Pull requests are made against the `develop` branch.

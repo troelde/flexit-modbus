@@ -52,9 +52,8 @@ def _print(device: Flexit) -> None:
         print()
         print_component(getattr(device, attr), title=label)
     print()
-    print(
-        f"Derived activity: {device.activity.name.lower() if device.activity else '—'}"
-    )
+    activity = device.activity
+    print(f"Derived activity: {activity.name.lower() if activity is not None else '—'}")
 
 
 async def _run(args: argparse.Namespace) -> int:

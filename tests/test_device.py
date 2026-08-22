@@ -23,6 +23,18 @@ async def test_async_update_decodes_measurements(flexit: Flexit) -> None:
     assert flexit.measurements.actual_air_speed == 2
 
 
+async def test_async_update_measurements_only(flexit: Flexit) -> None:
+    await flexit.async_update_measurements()
+    assert flexit.measurements.supply_air_temperature == 19.0
+    assert flexit.target_temperature is None
+
+
+async def test_async_update_setpoints_only(flexit: Flexit) -> None:
+    await flexit.async_update_setpoints()
+    assert flexit.target_temperature == 21.0
+    assert flexit.measurements.supply_air_temperature is None
+
+
 async def test_filter_running_hours_is_unsigned(
     flexit: Flexit, unit: MockModbusUnit
 ) -> None:
@@ -42,7 +54,7 @@ async def test_filter_alarm_and_heater_enabled_decode_to_bool(
     assert flexit.measurements.electric_heater_enabled is True
 
 
-async def test_pooled_reads_are_gap_planned(unit: MockModbusUnit) -> None:
+async def test_component_reads_are_gap_planned(unit: MockModbusUnit) -> None:
     from modbus_connection.cli_helper import CountingUnit
 
     unit.holding.update({8: 210, 17: 2})
@@ -50,7 +62,7 @@ async def test_pooled_reads_are_gap_planned(unit: MockModbusUnit) -> None:
     counting = CountingUnit(unit)
     device = Flexit(counting)
     await device.async_update()
-    # Gap-based planning merges nearby addresses into blocks (default max_gap):
+    # Component planning merges nearby addresses into blocks (default max_gap):
     # one holding block (8, 17) and two input blocks (8-28, then 48, split by
     # the >16-address gap) — far fewer than one request per field.
     assert counting.reads == 3
