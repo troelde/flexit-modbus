@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "flexit-modbus"
-version = "0.0.0"
+version = "0.1.0"
 description = "Read and control a Flexit air handling unit with a CI66 Modbus adapter."
 readme = "README.md"
 requires-python = ">=3.12"
